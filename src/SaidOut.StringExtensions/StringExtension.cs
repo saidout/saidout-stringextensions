@@ -84,12 +84,11 @@ namespace SaidOut.StringExtensions
             var sb = new StringBuilder(input);
             foreach (var item in ExtractKeyValues(keyValues))
             {
-                sb.Replace(keyPrefix + item.Key + keySuffix, item.Value?.ToString());
+                sb.Replace(keyPrefix + item.Key + keySuffix, item.Value?.ToString() ?? string.Empty);
             }
 
             return sb.ToString();
         }
-
 
 
         private static Dictionary<string, object> ExtractKeyValues(object keyValues)

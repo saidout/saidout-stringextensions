@@ -114,22 +114,53 @@ namespace SaidOut.StringExtensions.Tests
         #region ReplaceKeyWithValue
         [TestCase(null, "$", "$", "")]
         [TestCase("", "$", "$", "")]
-        [TestCase("The new value New.", "", "", "The new value valueA.")]
-        [TestCase("The new value New.", null, null, "The new value valueA.")]
-        [TestCase("The new value New.", "", null, "The new value valueA.")]
-        [TestCase("The new value New.", null, "", "The new value valueA.")]
-        [TestCase("The new value $New replaced old value $oldValue.", "$", "", "The new value valueA replaced old value oldValueBa.")]
-        [TestCase("The new value New$ replaced old value oldValue$.", "", "$", "The new value valueA replaced old value oldValueBa.")]
-        [TestCase("The new value #New# replaced old value #oldValue#.", "#", "#", "The new value valueA replaced old value oldValueBa.")]
-        [TestCase("The new value New$ replaced old value $oldValue.", "$", "", "The new value New$ replaced old value oldValueBa.")]
-        [TestCase("The new value {{New}} replaced old value {{oldValue}}.", "{{", "}}", "The new value valueA replaced old value oldValueBa.")]
-        [TestCase("The new value {{New}} replaced old value {{oldValue}}.", "{{", "", "The new value valueA}} replaced old value oldValueBa}}.")]
-        [TestCase("The new value {{New}} replaced old value {{oldValue}}.", "", "}}", "The new value {{valueA replaced old value {{oldValueBa.")]
-        public void ReplaceKeyWithValue_KeyValuesIsSet_ReturnExpectedValueWhereKeyHasBeenReplacedWithValue(string input, string keyPrefix, string keySuffix, string expectedValue)
+        [TestCase("The value keyA.", "", "", "The value valueA.")]
+        [TestCase("The value keyA.", null, null, "The value valueA.")]
+        [TestCase("The value keyA.", "", null, "The value valueA.")]
+        [TestCase("The value keyA.", null, "", "The value valueA.")]
+        [TestCase("The value $keyA next value $keyB.", "$", "", "The value valueA next value valueB.")]
+        [TestCase("The value keyA$ next value keyB$.", "", "$", "The value valueA next value valueB.")]
+        [TestCase("The value #keyA# next value #keyB#.", "#", "#", "The value valueA next value valueB.")]
+        [TestCase("The keyA$ value $keyB.", "$", "", "The keyA$ value valueB.")]
+        [TestCase("The value {{keyA}} next value {{keyB}}.", "{{", "}}", "The value valueA next value valueB.")]
+        [TestCase("The value {{keyA}} next value {{keyB}}.", "{{", "", "The value valueA}} next value valueB}}.")]
+        [TestCase("The value {{keyA}} next value {{keyB}}.", "", "}}", "The value {{valueA next value {{valueB.")]
+        public void ReplaceKeyWithValue_KeyValuesIsSet_ReturnExpectedValueWhereKeyHasBeenReplacedWithValue(string input,
+            string keyPrefix,
+            string keySuffix,
+            string expectedValue)
         {
-            var acutal = input.ReplaceKeyWithValue(new {New = "valueA", oldValue = "oldValueBa"}, keyPrefix, keySuffix);
+            var actual = input.ReplaceKeyWithValue(new {keyA = "valueA", keyB = "valueB"}, keyPrefix, keySuffix);
 
-            Assert.That(acutal, Is.EqualTo(expectedValue));
+            Assert.That(actual, Is.EqualTo(expectedValue));
+        }
+
+
+        [TestCase("Key is missing {missingKey}.", "{", "}", "Key is missing {missingKey}.")]
+        [TestCase("Key is missing $missingKey$.", "$", "", "Key is missing $missingKey$.")]
+        [TestCase("Key is missing $missingKey$.", "", "$", "Key is missing $missingKey$.")]
+        public void ReplaceKeyWithValue_KeyIsMissing_ReturnExpectedValueWhereKeyHasNotBeenReplaced(string input,
+            string keyPrefix,
+            string keySuffix,
+            string expectedValue)
+        {
+            var actual = input.ReplaceKeyWithValue(new { keyA = "valueA" }, keyPrefix, keySuffix);
+
+            Assert.That(actual, Is.EqualTo(expectedValue));
+        }
+
+
+        [TestCase("Value {keyA} is null.", "{", "}", "Value  is null.")]
+        [TestCase("Value $keyA$ is null.", "$", "", "Value $ is null.")]
+        [TestCase("Value $keyA$ is null.", "", "$", "Value $ is null.")]
+        public void ReplaceKeyWithValue_ValueIsNull_ReturnExpectedValueWhereKeyHasBeenReplaced(string input,
+            string keyPrefix,
+            string keySuffix,
+            string expectedValue)
+        {
+            var actual = input.ReplaceKeyWithValue(new { keyA = (string)null }, keyPrefix, keySuffix);
+
+            Assert.That(actual, Is.EqualTo(expectedValue));
         }
 
 
