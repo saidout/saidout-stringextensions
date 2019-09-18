@@ -30,15 +30,15 @@ String extensions for .NET that takes a type and return a string or takes a stri
 
 Example
 ```cs
-    var byteArrayA = "bGVhc3VyZ+/=".FromBase64StringToByteArray();    // byteArrayA set to the byte representation of bGVhc3VyZS4=  
+    var byteArrayA = "bGVhc3VyZ+/=".FromBase64StringToByteArray();    // byteArrayA set to byte array { 0x6c, 0x65, 0x61, 0x73, 0x75, 0x72, 0x67, 0xef }  
     var byteArrayB = "3d?".FromBase64StringToByteArray();             // byteArrayB set to null  
     var byteArrayC = "3d?".FromBase64StringToByteArray(false);        // An ArgumentException will be thrown  
-    var byteArrayD = "bGVhc3VyZ-_".FromBase64UrlStringToByteArray();  // byteArrayAA set to the byte representation of bGVhc3VyZS4  
+    var byteArrayD = "bGVhc3VyZ-_".FromBase64UrlStringToByteArray();  // byteArrayD set to the byte array { 0x6c, 0x65, 0x61, 0x73, 0x75, 0x72, 0x67, 0xef }  
 
     var array = new byte[] {0x23, 0xff};  
-    var base64 = array.ToBase64String();        // base64 set to      I/8=  
-    var base64Url = array.ToBase64UrlString();  // base64Url set to>  I_8  
-    var base64UrlWithPadding = array.ToBase64UrlString(false);  // base64UrlWithPadding set to>  I_8%3D  
+    var base64 = array.ToBase64String();        // base64 set to:  I/8=  
+    var base64Url = array.ToBase64UrlString();  // base64Url set to:  I_8  
+    var base64UrlWithPadding = array.ToBase64UrlString(false);  // base64UrlWithPadding set to:  I_8%3D  
 ```
 
 
@@ -52,8 +52,8 @@ Example
 Example
 ```cs
     var values = new[] {3, 5, 8, 10};  
-    var strA = values.ToDelimitatedString(", ", " and ");  // strA set to>  3, 5, 8 and 10  
-    var strB = values.ToDelimitatedString(val => "$" + val + "%", ", ", " or ");  // strA set to>  $3%, $5%, $8% or $10%  
+    var strA = values.ToDelimitatedString(", ", " and ");  // strA set to:  3, 5, 8 and 10  
+    var strB = values.ToDelimitatedString(val => "$" + val + "%", ", ", " or ");  // strB set to:  $3%, $5%, $8% or $10%  
 ```
 
 
@@ -67,8 +67,8 @@ Example
 
 Example
 ```cs
-    var byteArrayA = "12fed3".FromHexStringToByteArray();    // byteArrayA set to the byte representation of 12fed3  
-    var byteArrayB = "0x12fed3".FromHexStringToByteArray();  // byteArrayB set to the byte representation of 12fed3  
+    var byteArrayA = "12fed3".FromHexStringToByteArray();    // byteArrayA set to the byte array { 0x12, 0xfe, 0xd3 }  
+    var byteArrayB = "0x12fed3".FromHexStringToByteArray();  // byteArrayB set to the byte representation of { 0x12, 0xfe, 0xd3 }  
     var byteArrayC = "3de".FromHexStringToByteArray();       // byteArrayC set to null  
     var byteArrayD = "3de".FromHexStringToByteArray(false);  // An ArgumentException will be thrown  
 
@@ -89,11 +89,12 @@ Example
 
 Example
 ```cs
-    var strA = "this is a long string that should be truncated".Truncate(10, "~~");  // strA set to>  this is ~~  
+    var strA = "this is a long string that should be truncated".Truncate(10, "~~");  // strA set to:  this is ~~  
 
-    var strB = "/test".AppendSymbolIfMissing("/");   // strB set to>  /test/  
-    var strC = "/test/".AppendSymbolIfMissing("/");  // strB set to>  /test/  
+    var strB = "/test".AppendSymbolIfMissing("/");   // strB set to:  /test/  
+    var strC = "/test/".AppendSymbolIfMissing("/");  // strC set to:  /test/  
 
-    var strD = "trying $old to replace keywords $new".ReplaceKeyWithValue(new  { old = "OLD_VALUE", @new = "NEW_VALUE" }, "$", null);  
-    // strD set to>  trying OLD_VALUE to replace keywords NEW_VALUE  
+    var strD = "replace keyword with value $keyA and $keyB".ReplaceKeyWithValue(new  { keyA = "ValueA", keyB = "ValueB" }, "$", null);  
+    var strE = "replace keyword with value &keyA& and &keyB&".ReplaceKeyWithValue(new  { keyA = "ValueA", keyB = "ValueB" }, "&", "&");  
+    // strD and strE will be set to:  replace keyword with value ValueA and ValueB  
 ```
