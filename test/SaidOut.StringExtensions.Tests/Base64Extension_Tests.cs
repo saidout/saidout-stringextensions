@@ -73,7 +73,11 @@ namespace SaidOut.StringExtensions.Tests
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromBase64StringToByteArray(false));
             Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+#if CORE_2_1_OR_LATER
+            Assert.That(ex.Message, Does.Contain("Base-64").And.Contains("padding"), nameof(ex.Message));
+#else
             Assert.That(ex.Message, Does.Contain("Base-64").And.Contains("Invalid length"), nameof(ex.Message));
+#endif
         }
 
 
