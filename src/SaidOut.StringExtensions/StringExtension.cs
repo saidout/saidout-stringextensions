@@ -93,7 +93,7 @@ namespace SaidOut.StringExtensions
 
         private static Dictionary<string, object> ExtractKeyValues(object keyValues)
         {
-#if CORE
+#if NETSTANDARD_1_6
             var props = keyValues.GetType().GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #else
             var props = keyValues.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
