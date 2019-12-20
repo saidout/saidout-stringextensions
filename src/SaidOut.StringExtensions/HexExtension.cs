@@ -20,21 +20,31 @@ namespace SaidOut.StringExtensions
 
         /// <summary>Create a hex string from a byte array.</summary>
         /// <param name="value">The byte array to create a hex string from.</param>
-        /// <param name="upperCase">If the hex string should be in uppercasing, if <b>false</b> the hex string will be in lowercasing.</param>
+        /// <param name="upperCase">If the hex string should be in upper case, if <b>false</b> the hex string will be in lower case.</param>
         /// <returns>Hex string representation of <paramref name="value"/>.</returns>
+        [Obsolete]
         public static string ToHexString(this byte[] value, bool upperCase = true)
+        {
+            return value.ToHexString(upperCase ? LetterCase.Upper : LetterCase.Lower);
+        }
+
+
+        /// <summary>Create a hex string from a byte array.</summary>
+        /// <param name="value">The byte array to create a hex string from.</param>
+        /// <param name="letterCase">Specify the casing of the hex string returned.</param>
+        /// <returns>Hex string representation of <paramref name="value"/>.</returns>
+        public static string ToHexString(this byte[] value, LetterCase letterCase)
         {
             if (value == null)
                 return string.Empty;
 
-            var mapping = upperCase ? NibbleToStringMappingUpperCase : NibbleToStringMappingLowerCase;
+            var mapping = letterCase == LetterCase.Upper ? NibbleToStringMappingUpperCase : NibbleToStringMappingLowerCase;
             var hexString = new char[value.Length * 2];
-
             var charIndex = 0;
-            for (var i = 0; i < value.Length; i += 1, charIndex += 2)
+            for (var i = 0; i < value.Length; i += 1)
             {
-                hexString[charIndex] = mapping[value[i] >> 4];
-                hexString[charIndex + 1] = mapping[value[i] & 0x0F];
+                hexString[charIndex++] = mapping[value[i] >> 4];
+                hexString[charIndex++] = mapping[value[i] & 0x0F];
             }
 
             return new string(hexString);

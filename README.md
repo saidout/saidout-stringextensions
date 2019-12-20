@@ -73,8 +73,8 @@ Example
     var byteArrayD = "3de".FromHexStringToByteArray(false);  // An ArgumentException will be thrown  
 
     var array = new byte[] { 0x23, 0xff };  
-    var hexA = array.ToHexString();       // hexA set to>  23FF  
-    var hexB = array.ToHexString(false);  // hexA set to>  23ff  
+    var hexA = array.ToHexString(LetterCase.Upper);    // hexA set to>  23FF  
+    var hexB = array.ToHexString(LetterCase.Lower);    // hexB set to>  23ff  
 ```
 
 
