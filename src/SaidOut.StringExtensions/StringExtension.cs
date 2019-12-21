@@ -28,20 +28,22 @@ namespace SaidOut.StringExtensions
         /// <exception cref="System.ArgumentException">If <paramref name="maxLength"/> is less than the length of <paramref name="truncateSymbol"/> .</exception>
         public static string Truncate(this string value, int maxLength, string truncateSymbol = EllipsisAsciiSymbol)
         {
-            if (maxLength < 1)
-                throw new ArgumentOutOfRangeException(nameof(maxLength), string.Format(ExceptionMessages.ParamCannotBeLessThan_ParamName_MinValue_ActualValue, nameof(maxLength), 1, maxLength));
+            const int maxLengthLowerBound = 1;
+            if (maxLength < maxLengthLowerBound) throw new ArgumentOutOfRangeException(
+                nameof(maxLength), ExceptionMessages.ParamCannotBeLessThan(maxLength, nameof(maxLength), maxLengthLowerBound));
 
             truncateSymbol = truncateSymbol ?? string.Empty;
-            if (truncateSymbol.Length > maxLength)
-                throw new ArgumentException(string.Format(ExceptionMessages.ParamAStringLengthCannotBeGreaterThanValueOfParamB_ParamAStrLen_ParamBValue, nameof(truncateSymbol), nameof(maxLength)), nameof(truncateSymbol));
+            if (truncateSymbol.Length > maxLength) throw new ArgumentException(
+                ExceptionMessages.ParamAStrLenCannotBeGreaterThanValueOfParamB(
+                    nameof(truncateSymbol),
+                    truncateSymbol.Length,
+                    nameof(maxLength),
+                    maxLength), nameof(truncateSymbol));
 
-            if (value == null)
-                return string.Empty;
-
-            if (value.Length > maxLength)
-                return value.Substring(0, maxLength - truncateSymbol.Length) + truncateSymbol;
-
-            return value;
+            if (value == null) return string.Empty;
+            return value.Length > maxLength
+                ? value.Substring(0, maxLength - truncateSymbol.Length) + truncateSymbol 
+                : value;
         }
 
 
@@ -56,8 +58,8 @@ namespace SaidOut.StringExtensions
         /// <returns>A string guaranteed to end with symbol.</returns>
         public static string AppendSymbolIfMissing(this string input, string symbol)
         {
-            if (string.IsNullOrEmpty(symbol))
-                throw new ArgumentException(string.Format(ExceptionMessages.StringParamCannotBeNullOrEmpty_ParamName, nameof(symbol)), nameof(symbol));
+            if (string.IsNullOrEmpty(symbol)) throw new ArgumentException(
+                ExceptionMessages.StringParamCannotBeNullOrEmpty(nameof(symbol)), nameof(symbol));
 
             input = input ?? string.Empty;
             return input.EndsWith(symbol)
