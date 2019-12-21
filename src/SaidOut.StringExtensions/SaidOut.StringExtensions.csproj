@@ -21,8 +21,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-    <DefineConstants>NETSTANDARD_1_6</DefineConstants>
+  <PropertyGroup Condition="$(TargetFramework.Equals('netstandard2.1'))">
+    <DefineConstants>NETSTANDARD_2_1</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

@@ -108,6 +108,19 @@ namespace SaidOut.StringExtensions.Tests
             Assert.That(ex.ParamName, Is.EqualTo("symbol"));
         }
 
+
+        [TestCase(null, '~', "~")]
+        [TestCase("", '#', "#")]
+        [TestCase("adsSYM$", '$', "adsSYM$")]
+        [TestCase("SYMads", '$', "SYMads$")]
+        [TestCase("pathA/pathB", '/', "pathA/pathB/")]
+        [TestCase("pathA/pathB/", '/', "pathA/pathB/")]
+        public void AppendSymbolIfMissing_Symbol_ReturnExpectedValue(string input, char symbol, string expectedValue)
+        {
+            var actual = input.AppendSymbolIfMissing(symbol);
+
+            Assert.That(actual, Is.EqualTo(expectedValue));
+        }
         #endregion
 
 

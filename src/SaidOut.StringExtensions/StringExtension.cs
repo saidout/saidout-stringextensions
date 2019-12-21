@@ -65,6 +65,27 @@ namespace SaidOut.StringExtensions
                 : input + symbol;
         }
 
+        /// <summary>Make sure that the <paramref name="input"/> ends with symbol by appending it to the <paramref name="input"/> if it does not end with symbol.</summary>
+        /// <param name="input">The input which <paramref name="symbol"/> should be appended to if it's missing.</param>
+        /// <param name="symbol">The symbol that the <paramref name="input"/> should end with.</param>
+        /// <example>
+        /// Symbol: /
+        /// Input: testA/testB  => testA/testB/
+        /// Input: testA/testB/ => testA/testB/
+        /// </example>
+        /// <returns>A string guaranteed to end with symbol.</returns>
+        public static string AppendSymbolIfMissing(this string input, char symbol)
+        {
+            input = input ?? string.Empty;
+#if NETSTANDARD_2_1
+            return input.EndsWith(symbol)
+#else
+            return input.EndsWith(new string(new [] { symbol }))
+#endif
+                ? input
+                : input + symbol;
+        }
+
 
         /// <summary>Use the <paramref name="keyValues"/> object to replace text matching the properties in keyValues with their corresponding property value.</summary>
         /// <param name="input">The string where keys should be replaced with the corresponding value.</param>
@@ -93,7 +114,7 @@ namespace SaidOut.StringExtensions
 
         private static Dictionary<string, object> ExtractKeyValues(object keyValues)
         {
-#if NETSTANDARD_1_6
+#if NETSTANDARD
             var props = keyValues.GetType().GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #else
             var props = keyValues.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
