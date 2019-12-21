@@ -12,8 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>string extensions; base64; base64url;</PackageTags>
 
-    <VersionPrefix>1.0.3</VersionPrefix>
-    <PackageReleaseNotes>Added support for netstandard2.1 and net48.</PackageReleaseNotes>
+    <VersionPrefix>1.0.4</VersionPrefix>
+    <PackageReleaseNotes>Added xml documents to package.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
