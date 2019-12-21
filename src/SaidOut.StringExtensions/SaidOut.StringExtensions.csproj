@@ -18,6 +18,7 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TargetFrameworks>netstandard2.1;netstandard2.0;netstandard1.6;net48;net472;net471;net47;net462;net461;net46;net452;net451;net45</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
