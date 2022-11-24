@@ -10,9 +10,9 @@ namespace SaidOut.StringExtensions.Tests
     {
 
         [Test]
-        public void ToDelimitatedString_CollectionIsNull_ReturnEmptyString()
+        public void ToDelimitedString_CollectionIsNull_ReturnEmptyString()
         {
-            var actual = ((IEnumerable<int>)null).ToDelimitatedString(",");
+            var actual = ((IEnumerable<int>?)null).ToDelimitedString(",");
 
             Assert.That(actual, Is.EqualTo(string.Empty));
         }
@@ -21,9 +21,9 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("1", new[] { 1 })]
         [TestCase("1, 2", new[] { 1, 2 })]
         [TestCase("1, 2, 3", new[] { 1, 2, 3 })]
-        public void ToDelimitatedStringWithNoParams_CollectionHasElements_ReturnExpectedString(string expected, int[] values)
+        public void ToDelimitedStringWithNoParams_CollectionHasElements_ReturnExpectedString(string expected, int[] values)
         {
-            var actual = values.ToDelimitatedString();
+            var actual = values.ToDelimitedString();
 
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -41,18 +41,18 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("1", ", ", " and ", new[] { 1 })]
         [TestCase("1 and 2", ", ", " and ", new[] { 1, 2 })]
         [TestCase("1, 2, 3, 4 and 5", ", ", " and ", new[] { 1, 2, 3, 4, 5 })]
-        public void ToDelimitatedStringWithTwoParams_CollectionHasElements_ReturnExpectedString(string expected, string delimiter, string endDelimiter, int[] values)
+        public void ToDelimitedStringWithTwoParams_CollectionHasElements_ReturnExpectedString(string expected, string delimiter, string endDelimiter, int[] values)
         {
-            var actual = values.ToDelimitatedString(delimiter, endDelimiter);
+            var actual = values.ToDelimitedString(delimiter, endDelimiter);
 
             Assert.That(actual, Is.EqualTo(expected));
         }
 
 
         [Test]
-        public void ToDelimitatedWithStringWithFunc_CollectionIsNull_ReturnEmptyString()
+        public void ToDelimitedWithStringWithFunc_CollectionIsNull_ReturnEmptyString()
         {
-            var actual = ((IEnumerable<int>)null).ToDelimitatedString(it => "t" + it, ",");
+            var actual = ((IEnumerable<int>?)null).ToDelimitedString(it => "t" + it, ",");
 
             Assert.That(actual, Is.EqualTo(string.Empty));
         }
@@ -70,11 +70,11 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("'1'", IntToSingleQuoateFunc, new[] { 1 })]
         [TestCase("!1#, !2#", IntToExcHashFunc, new[] { 1, 2 })]
         [TestCase("'1', '2', '3'", IntToSingleQuoateFunc, new[] { 1, 2, 3 })]
-        public void ToDelimitatedStringWithFuncNoParams_CollectionHasElements_ReturnExpectedString(string expected, string funcKey, int[] values)
+        public void ToDelimitedStringWithFuncNoParams_CollectionHasElements_ReturnExpectedString(string expected, string funcKey, int[] values)
         {
             var func = ConstToFuncMapping[funcKey];
 
-            var actual = values.ToDelimitatedString(func);
+            var actual = values.ToDelimitedString(func);
 
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -92,7 +92,7 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("!1#", IntToExcHashFunc, ", ", " and ", new[] { 1 })]
         [TestCase("'1' and '2'", IntToSingleQuoateFunc, ", ", " and ", new[] { 1, 2 })]
         [TestCase("!1#, !2#, !3#, !4# and !5#", IntToExcHashFunc, ", ", " and ", new[] { 1, 2, 3, 4, 5 })]
-        public void ToDelimitatedStringWithFuncTwoParams_CollectionHasElements_ReturnExpectedString(string expected,
+        public void ToDelimitedStringWithFuncTwoParams_CollectionHasElements_ReturnExpectedString(string expected,
             string funcKey,
             string delimiter,
             string endDelimiter,
@@ -100,7 +100,7 @@ namespace SaidOut.StringExtensions.Tests
         {
             var func = ConstToFuncMapping[funcKey];
 
-            var actual = values.ToDelimitatedString(func, delimiter, endDelimiter);
+            var actual = values.ToDelimitedString(func, delimiter, endDelimiter);
 
             Assert.That(actual, Is.EqualTo(expected));
         }

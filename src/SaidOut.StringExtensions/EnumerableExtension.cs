@@ -19,9 +19,9 @@ namespace SaidOut.StringExtensions
         /// </param>
         /// <remarks>Will use <see cref="object.ToString"/> to get the string representation for each element in the <paramref name="collection"/>.</remarks>
         /// <returns>The string representation of the collection using <paramref name="delimiter"/> and <paramref name="endDelimiter"/> as delimiter between values in the collection.</returns>
-        public static string ToDelimitatedString<T>(this IEnumerable<T> collection, string delimiter = ", ", string endDelimiter = null)
+        public static string ToDelimitedString<T>(this IEnumerable<T>? collection, string delimiter = ", ", string? endDelimiter = null)
         {
-            if (collection == null)
+            if (collection is null)
                 return string.Empty;
 
             var sb = new StringBuilder();
@@ -71,9 +71,9 @@ namespace SaidOut.StringExtensions
         /// If it's <b>null</b> then the <paramref name="delimiter"/> will be used as <paramref name="endDelimiter"/>.
         /// </param>
         /// <returns>The string representation of the collection using <paramref name="delimiter"/> and <paramref name="endDelimiter"/> as delimiter between values in the collection.</returns>
-        public static string ToDelimitatedString<T>(this IEnumerable<T> collection, Func<T, string> func, string delimiter = ", ", string endDelimiter = null)
+        public static string ToDelimitedString<T>(this IEnumerable<T>? collection, Func<T, string> func, string delimiter = ", ", string? endDelimiter = null)
         {
-            if (collection == null)
+            if (collection is null)
                 return string.Empty;
 
             var sb = new StringBuilder();

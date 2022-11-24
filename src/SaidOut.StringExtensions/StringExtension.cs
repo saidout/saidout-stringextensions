@@ -26,20 +26,20 @@ namespace SaidOut.StringExtensions
         /// </returns>
         /// <exception cref="System.ArgumentOutOfRangeException">If <paramref name="maxLength"/> is less than one.</exception>
         /// <exception cref="System.ArgumentException">If <paramref name="maxLength"/> is less than the length of <paramref name="truncateSymbol"/> .</exception>
-        public static string Truncate(this string value, int maxLength, string truncateSymbol = EllipsisAsciiSymbol)
+        public static string Truncate(this string? value, int maxLength, string? truncateSymbol = EllipsisAsciiSymbol)
         {
             if (maxLength < 1)
                 throw new ArgumentOutOfRangeException(nameof(maxLength), string.Format(ExceptionMessages.ParamCannotBeLessThan_ParamName_MinValue_ActualValue, nameof(maxLength), 1, maxLength));
 
-            truncateSymbol = truncateSymbol ?? string.Empty;
+            truncateSymbol ??= string.Empty;
             if (truncateSymbol.Length > maxLength)
                 throw new ArgumentException(string.Format(ExceptionMessages.ParamAStringLengthCannotBeGreaterThanValueOfParamB_ParamAStrLen_ParamBValue, nameof(truncateSymbol), nameof(maxLength)), nameof(truncateSymbol));
 
-            if (value == null)
+            if (value is null)
                 return string.Empty;
 
             if (value.Length > maxLength)
-                return value.Substring(0, maxLength - truncateSymbol.Length) + truncateSymbol;
+                return value[..(maxLength - truncateSymbol.Length)] + truncateSymbol;
 
             return value;
         }
@@ -54,12 +54,12 @@ namespace SaidOut.StringExtensions
         /// Input: testA/testB/ => testA/testB/
         /// </example>
         /// <returns>A string guaranteed to end with symbol.</returns>
-        public static string AppendSymbolIfMissing(this string input, string symbol)
+        public static string AppendSymbolIfMissing(this string? input, string symbol)
         {
             if (string.IsNullOrEmpty(symbol))
                 throw new ArgumentException(string.Format(ExceptionMessages.StringParamCannotBeNullOrEmpty_ParamName, nameof(symbol)), nameof(symbol));
 
-            input = input ?? string.Empty;
+            input ??= string.Empty;
             return input.EndsWith(symbol)
                 ? input
                 : input + symbol;
@@ -73,18 +73,16 @@ namespace SaidOut.StringExtensions
         /// <param name="keySuffix">A suffix that should be appended to the key before searching for the key in <paramref name="input"/>, can be null or empty if no suffix should be used.</param>
         /// <returns>A string where keys has been replaced with the corresponding value.</returns>
         /// <exception cref="ArgumentNullException">If <paramref name="keyValues"/> is null.</exception>
-        public static string ReplaceKeyWithValue(this string input, object keyValues, string keyPrefix, string keySuffix)
+        public static string ReplaceKeyWithValue(this string? input, object? keyValues, string keyPrefix, string keySuffix)
         {
-            if (keyValues == null)
-                throw new ArgumentNullException(nameof(keyValues));
-
+            ArgumentNullException.ThrowIfNull(keyValues);
             if (string.IsNullOrWhiteSpace(input))
                 return input ?? string.Empty;
 
             var sb = new StringBuilder(input);
-            foreach (var item in ExtractKeyValues(keyValues))
+            foreach (var (key, value) in ExtractKeyValues(keyValues))
             {
-                sb.Replace(keyPrefix + item.Key + keySuffix, item.Value?.ToString());
+                sb.Replace(keyPrefix + key + keySuffix, value?.ToString());
             }
 
             return sb.ToString();
@@ -92,20 +90,10 @@ namespace SaidOut.StringExtensions
 
 
 
-        private static Dictionary<string, object> ExtractKeyValues(object keyValues)
+        private static Dictionary<string, object?> ExtractKeyValues(object keyValues)
         {
-#if CORE
             var props = keyValues.GetType().GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-#else
-            var props = keyValues.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-#endif
-            var dic = new Dictionary<string, object>();
-            foreach (var prop in props)
-            {
-                dic.Add(prop.Name, prop.GetValue(keyValues));
-            }
-
-            return dic;
+            return props.ToDictionary(prop => prop.Name, prop => prop.GetValue(keyValues));
         }
     }
 }

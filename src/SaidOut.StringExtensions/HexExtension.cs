@@ -20,11 +20,11 @@ namespace SaidOut.StringExtensions
 
         /// <summary>Create a hex string from a byte array.</summary>
         /// <param name="value">The byte array to create a hex string from.</param>
-        /// <param name="upperCase">If the hex string should be in uppercasing, if <b>false</b> the hex string will be in lowercasing.</param>
+        /// <param name="upperCase">If the hex string should be in upper casing, if <b>false</b> the hex string will be in lower casing.</param>
         /// <returns>Hex string representation of <paramref name="value"/>.</returns>
-        public static string ToHexString(this byte[] value, bool upperCase = true)
+        public static string ToHexString(this byte[]? value, bool upperCase = true)
         {
-            if (value == null)
+            if (value is null)
                 return string.Empty;
 
             var mapping = upperCase ? NibbleToStringMappingUpperCase : NibbleToStringMappingLowerCase;
@@ -46,13 +46,13 @@ namespace SaidOut.StringExtensions
         /// <param name="shouldReturnNullIfConversionFailed">If null should be returned if <paramref name="value"/> does not contain a Hex string instead of throwing an exception.</param>
         /// <returns>A byte array created from the hex string.</returns>
         /// <exception cref="ArgumentException">If <paramref name="value"/> does not contain a hex string and <paramref name="shouldReturnNullIfConversionFailed"/> is set to <b>false</b>.</exception>
-        public static byte[] FromHexStringToByteArray(this string value, bool shouldReturnNullIfConversionFailed = true)
+        public static byte[]? FromHexStringToByteArray(this string? value, bool shouldReturnNullIfConversionFailed = true)
         {
-            if (value == null)
-                return new byte[0];
+            if (value is null)
+                return Array.Empty<byte>();
 
             value = value.StartsWith("0x")
-                ? value.Substring(2)
+                ? value[2..]
                 : value;
 
             var output = new byte[value.Length / 2];
@@ -69,7 +69,6 @@ namespace SaidOut.StringExtensions
                 {
                     var highNibble = CharToNibbleMapping[value[idx]];
                     var lowNibble = CharToNibbleMapping[value[idx + 1]];
-
                     output[outputIndex] = (byte)((highNibble << 4) | lowNibble);
                 }
                 catch (KeyNotFoundException)

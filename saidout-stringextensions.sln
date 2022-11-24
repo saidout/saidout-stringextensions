@@ -1,20 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaidOut.StringExtensions", "src\SaidOut.StringExtensions\SaidOut.StringExtensions.csproj", "{BBFAEAAE-1CA9-4046-8706-0E229BBD3CE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaidOut.StringExtensions", "src\SaidOut.StringExtensions\SaidOut.StringExtensions.csproj", "{7AEE21BF-42EB-4073-8336-1100895039C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{625ADAC3-2578-433E-ABE0-2D166300AACD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{13BFF023-830B-4DDE-A405-2688D52FC710}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6BB01B53-0B92-4DB2-8A98-3B74FB76EDE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaidOut.StringExtensions.Tests", "test\SaidOut.StringExtensions.Tests\SaidOut.StringExtensions.Tests.csproj", "{03129EFD-8607-4660-BE75-A77A60E00ABE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionsItems", "SolutionsItems", "{4244684A-1735-4370-8709-6238683648E3}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
 		README.md = README.md
-		saidout_icon32x32.png = saidout_icon32x32.png
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{48F6BF2C-C3DD-4714-A0CA-833DBD407A5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaidOut.StringExtensions.Tests", "test\SaidOut.StringExtensions.Tests\SaidOut.StringExtensions.Tests.csproj", "{8A483002-F0E1-4F91-9438-8F691CA0CCF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,22 +22,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BBFAEAAE-1CA9-4046-8706-0E229BBD3CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBFAEAAE-1CA9-4046-8706-0E229BBD3CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBFAEAAE-1CA9-4046-8706-0E229BBD3CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBFAEAAE-1CA9-4046-8706-0E229BBD3CE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A483002-F0E1-4F91-9438-8F691CA0CCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A483002-F0E1-4F91-9438-8F691CA0CCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A483002-F0E1-4F91-9438-8F691CA0CCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A483002-F0E1-4F91-9438-8F691CA0CCF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AEE21BF-42EB-4073-8336-1100895039C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AEE21BF-42EB-4073-8336-1100895039C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AEE21BF-42EB-4073-8336-1100895039C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AEE21BF-42EB-4073-8336-1100895039C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03129EFD-8607-4660-BE75-A77A60E00ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03129EFD-8607-4660-BE75-A77A60E00ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03129EFD-8607-4660-BE75-A77A60E00ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03129EFD-8607-4660-BE75-A77A60E00ABE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8A483002-F0E1-4F91-9438-8F691CA0CCF1} = {48F6BF2C-C3DD-4714-A0CA-833DBD407A5B}
+		{7AEE21BF-42EB-4073-8336-1100895039C5} = {13BFF023-830B-4DDE-A405-2688D52FC710}
+		{03129EFD-8607-4660-BE75-A77A60E00ABE} = {6BB01B53-0B92-4DB2-8A98-3B74FB76EDE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {27407254-8F5F-42CD-BDAF-9161EECC0B27}
+		SolutionGuid = {1FED9C0E-69F8-4913-8AFD-43D77ECEFC1C}
 	EndGlobalSection
 EndGlobal

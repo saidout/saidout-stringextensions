@@ -74,7 +74,7 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void ToHexString_ValueIsNull_ReturnEmptyString()
         {
-            var actual = ((byte[]) null).ToHexString();
+            var actual = ((byte[]?) null).ToHexString();
 
             Assert.AreEqual(string.Empty, actual);
         }
@@ -99,9 +99,9 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void FromHexStringToByteArray_ValueIsNull_ReturnEmptyArray()
         {
-            var actual = ((string) null).FromHexStringToByteArray();
+            var actual = ((string?) null).FromHexStringToByteArray();
 
-            Assert.AreEqual(new byte[0], actual);
+            Assert.AreEqual(Array.Empty<byte>(), actual);
         }
 
 
@@ -114,8 +114,8 @@ namespace SaidOut.StringExtensions.Tests
         public void FromHexStringToByteArrayWithShouldReturnNullIfConversionFailedSetToFalse_ValueContainNonHexChar_ThrowsArgumentException(string value)
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromHexStringToByteArray(false));
-            Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
-            Assert.That(ex.Message, Does.Contain("hex").And.Contains("non-hex character"), nameof(ex.Message));
+            Assert.That(ex?.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+            Assert.That(ex?.Message, Does.Contain("hex").And.Contains("non-hex character"), nameof(ex.Message));
         }
 
 
@@ -128,8 +128,8 @@ namespace SaidOut.StringExtensions.Tests
         public void FromHexStringToByteArrayWithShouldReturnNullIfConversionFailedSetToFalse_InvalidHexLength_ThrowsArgumentException(string value)
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromHexStringToByteArray(false));
-            Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
-            Assert.That(ex.Message, Does.Contain("hex").And.Contains("Invalid length"), nameof(ex.Message));
+            Assert.That(ex?.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+            Assert.That(ex?.Message, Does.Contain("hex").And.Contains("Invalid length"), nameof(ex.Message));
         }
 
 

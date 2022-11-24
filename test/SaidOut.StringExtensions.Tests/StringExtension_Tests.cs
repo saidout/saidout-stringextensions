@@ -22,7 +22,7 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void Truncate_ValueIsNull_ReturnEmptyString()
         {
-            var actual = ((string)null).Truncate(4);
+            var actual = ((string?)null).Truncate(4);
 
             Assert.That(actual, Is.EqualTo(string.Empty));
         }
@@ -35,9 +35,9 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("1234567890", 6, "--", "1234--")]
         [TestCase("1234", 3, "", "123")]
         [TestCase("1234", 2, null, "12")]
-        public void Truncate_ValueLengthIsGreaterThenMaxLength_ReturnTruncatedStringWithSymbolAtEnd(string value, int maxLength, string sybmol, string expectedValue)
+        public void Truncate_ValueLengthIsGreaterThenMaxLength_ReturnTruncatedStringWithSymbolAtEnd(string value, int maxLength, string symbol, string expectedValue)
         {
-            var actual = value.Truncate(maxLength, sybmol);
+            var actual = value.Truncate(maxLength, symbol);
 
             Assert.That(actual, Is.EqualTo(expectedValue));
         }
@@ -45,22 +45,22 @@ namespace SaidOut.StringExtensions.Tests
 
         [TestCase("1234", 3, "....")]
         [TestCase("12", 4, ".....")]
-        public void Truncate_TruncateSymbolLengthIsGreaterThanMaxLength_ThrowsArgumentException(string value, int maxLength, string sybmol)
+        public void Truncate_TruncateSymbolLengthIsGreaterThanMaxLength_ThrowsArgumentException(string value, int maxLength, string symbol)
         {
-            var ex = Assert.Throws<ArgumentException>(() => value.Truncate(maxLength, sybmol));
-            Assert.That(ex.ParamName, Is.EqualTo("truncateSymbol"));
-            Assert.That(ex.Message, Does.Contain("maxLength").And.Contain("truncateSymbol"));
+            var ex = Assert.Throws<ArgumentException>(() => value.Truncate(maxLength, symbol));
+            Assert.That(ex?.ParamName, Is.EqualTo("truncateSymbol"));
+            Assert.That(ex?.Message, Does.Contain("maxLength").And.Contain("truncateSymbol"));
         }
 
 
         [TestCase("12", 0, "")]
         [TestCase("12", 0, ".")]
         [TestCase("12", -1, ".")]
-        public void Truncate_MaxLengthIsLessOne_ThrowsArgumentOutOfRangeException(string value, int maxLength, string sybmol)
+        public void Truncate_MaxLengthIsLessOne_ThrowsArgumentOutOfRangeException(string value, int maxLength, string symbol)
         {
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => value.Truncate(maxLength, sybmol));
-            Assert.That(ex.ParamName, Is.EqualTo("maxLength"));
-            Assert.That(ex.Message, Does.Contain("maxLength").And.Contain("1"));
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => value.Truncate(maxLength, symbol));
+            Assert.That(ex?.ParamName, Is.EqualTo("maxLength"));
+            Assert.That(ex?.Message, Does.Contain("maxLength").And.Contain("1"));
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace SaidOut.StringExtensions.Tests
         public void AppendSymbolIfMissing_SymbolIsNullOrEmpty_ThrowsArgumentException(string symbol)
         {
             var ex = Assert.Throws<ArgumentException>(() => "test".AppendSymbolIfMissing(symbol));
-            Assert.That(ex.ParamName, Is.EqualTo("symbol"));
+            Assert.That(ex?.ParamName, Is.EqualTo("symbol"));
         }
 
         #endregion
@@ -127,9 +127,9 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase("The new value {{New}} replaced old value {{oldValue}}.", "", "}}", "The new value {{valueA replaced old value {{oldValueBa.")]
         public void ReplaceKeyWithValue_KeyValuesIsSet_ReturnExpectedValueWhereKeyHasBeenReplacedWithValue(string input, string keyPrefix, string keySuffix, string expectedValue)
         {
-            var acutal = input.ReplaceKeyWithValue(new {New = "valueA", oldValue = "oldValueBa"}, keyPrefix, keySuffix);
+            var actual = input.ReplaceKeyWithValue(new {New = "valueA", oldValue = "oldValueBa"}, keyPrefix, keySuffix);
 
-            Assert.That(acutal, Is.EqualTo(expectedValue));
+            Assert.That(actual, Is.EqualTo(expectedValue));
         }
 
 
@@ -137,8 +137,9 @@ namespace SaidOut.StringExtensions.Tests
         public void ReplaceKeyWithValue_KeyValuesIsNull_ThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => "test".ReplaceKeyWithValue(null, "{{", "}}"));
-            Assert.That(ex.ParamName, Is.EqualTo("keyValues"));
+            Assert.That(ex?.ParamName, Is.EqualTo("keyValues"));
         }
-        #endregion
-    }
+
+    #endregion
+}
 }

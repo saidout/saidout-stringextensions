@@ -47,13 +47,13 @@ Example
 
 | Name | Description |
 |--------|-------------|
-| `ToDelimitatedString` | Create a string representation for a `collection` where each element is separated with the delimiter specified. |
+| `ToDelimitedString` | Create a string representation for a `collection` where each element is separated with the delimiter specified. |
 
 Example
 ```cs
     var values = new[] {3, 5, 8, 10};  
-    var strA = values.ToDelimitatedString(", ", " and ");  // strA set to>  3, 5, 8 and 10  
-    var strB = values.ToDelimitatedString(val => "$" + val + "%", ", ", " or ");  // strA set to>  $3%, $5%, $8% or $10%  
+    var strA = values.ToDelimitedString(", ", " and ");  // strA set to>  3, 5, 8 and 10  
+    var strB = values.ToDelimitedString(val => "$" + val + "%", ", ", " or ");  // strA set to>  $3%, $5%, $8% or $10%  
 ```
 
 

@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace SaidOut.StringExtensions.Tests
 {
@@ -25,7 +24,7 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void ToBase64String_ValueIsNull_ReturnEmptyString()
         {
-            var actual = ((byte[]) null).ToBase64String();
+            var actual = ((byte[]?) null).ToBase64String();
 
             Assert.AreEqual(string.Empty, actual);
         }
@@ -50,7 +49,7 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void FromBase64StringToByteArray_ValueIsNull_ReturnEmptyArray()
         {
-            var actual = ((string) null).FromBase64StringToByteArray();
+            var actual = ((string?) null).FromBase64StringToByteArray();
 
             Assert.AreEqual(new byte[0], actual);
         }
@@ -62,8 +61,8 @@ namespace SaidOut.StringExtensions.Tests
         public void FromBase64StringToByteArrayWithShouldReturnNullIfConversionFailedSetToFalse_ValueContainsNonBase64UrlCharacters_ThrowsArgumentException(string value)
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromBase64StringToByteArray(false));
-            Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
-            Assert.That(ex.Message, Does.Contain("Base-64").And.Contains("illegal character"), nameof(ex.Message));
+            Assert.That(ex?.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+            Assert.That(ex?.Message, Does.Contain("Base-64 string").And.Contains("illegal character"), nameof(ex.Message));
         }
 
 
@@ -71,8 +70,8 @@ namespace SaidOut.StringExtensions.Tests
         public void FromBase64StringToByteArrayWithShouldReturnNullIfConversionFailedSetToFalse_InvalidBase64Length_ThrowsArgumentException(string value)
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromBase64StringToByteArray(false));
-            Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
-            Assert.That(ex.Message, Does.Contain("Base-64").And.Contains("Invalid length"), nameof(ex.Message));
+            Assert.That(ex?.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+            Assert.That(ex?.Message, Does.Contain("Base-64 string"), nameof(ex.Message));
         }
 
 
@@ -123,7 +122,7 @@ namespace SaidOut.StringExtensions.Tests
         [Test]
         public void ToBase64UrlString_ValueIsNull_ReturnEmptyString()
         {
-            var actual = ((byte[]) null).ToBase64UrlString();
+            var actual = ((byte[]?) null).ToBase64UrlString();
 
             Assert.AreEqual(string.Empty, actual);
         }
@@ -153,7 +152,7 @@ namespace SaidOut.StringExtensions.Tests
         [TestCase]
         public void FromBase64UrlStringToByteArray_ValueIsNull_ReturnEmptyArray()
         {
-            var actual = ((string) null).FromBase64UrlStringToByteArray();
+            var actual = ((string?) null).FromBase64UrlStringToByteArray();
 
             Assert.AreEqual(new byte[0], actual);
         }
@@ -165,8 +164,8 @@ namespace SaidOut.StringExtensions.Tests
         public void FromBase64UrlStringToByteArrayShouldReturnNullIfConversionFailedSetToFalse_ValueContainsNonBase64UrlCharacters_ThrowsArgumentException(string value)
         {
             var ex = Assert.Throws<ArgumentException>(() => value.FromBase64UrlStringToByteArray(false));
-            Assert.That(ex.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
-            Assert.That(ex.Message, Does.Contain("Base-64 url").And.Contains("illegal character"), nameof(ex.Message));
+            Assert.That(ex?.ParamName, Is.EqualTo("value"), nameof(ex.ParamName));
+            Assert.That(ex?.Message, Does.Contain("Base-64 url").And.Contains("illegal character"), nameof(ex.Message));
         }
 
 

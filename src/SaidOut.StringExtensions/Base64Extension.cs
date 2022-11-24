@@ -10,12 +10,11 @@ namespace SaidOut.StringExtensions
         /// <summary>Create a Base64 encoded string from <paramref name="value"/>.</summary>
         /// <param name="value">The bytes the Base64 string should be created from. If <b>null</b> an empty string is returned.</param>
         /// <returns>A Base64 encoded string.</returns>
-        public static string ToBase64String(this byte[] value)
+        public static string ToBase64String(this byte[]? value)
         {
-            if (value == null)
-                return string.Empty;
-
-            return Convert.ToBase64String(value);
+            return value is null
+                ? string.Empty
+                : Convert.ToBase64String(value);
         }
 
 
@@ -24,10 +23,10 @@ namespace SaidOut.StringExtensions
         /// <param name="shouldReturnNullIfConversionFailed">If null should be returned if <paramref name="value"/> does not contain a Base64 encoded string instead of throwing an exception.</param>
         /// <returns>Byte array representation of the Base64 encoded string in <paramref name="value"/>.</returns>
         /// <exception cref="ArgumentException">If <paramref name="value"/> does not contain a Base64 string and <paramref name="shouldReturnNullIfConversionFailed"/> is set to <b>false</b>.</exception>
-        public static byte[] FromBase64StringToByteArray(this string value, bool shouldReturnNullIfConversionFailed = true)
+        public static byte[]? FromBase64StringToByteArray(this string? value, bool shouldReturnNullIfConversionFailed = true)
         {
-            if (value == null)
-                return new byte[0];
+            if (value is null)
+                return Array.Empty<byte>();
 
             try
             {
@@ -51,9 +50,9 @@ namespace SaidOut.StringExtensions
         /// If it's padded, the padding will be percent encoded, i.e. %3D.
         /// </remarks>
         /// <returns>A Base64 URL encoded string.</returns>
-        public static string ToBase64UrlString(this byte[] value, bool removePadding = true)
+        public static string ToBase64UrlString(this byte[]? value, bool removePadding = true)
         {
-            if (value == null)
+            if (value is null)
                 return string.Empty;
 
             var base64Uri = Convert.ToBase64String(value).Replace("+", "-").Replace("/", "_");
@@ -69,10 +68,10 @@ namespace SaidOut.StringExtensions
         /// <remarks>Expect a 'base64url' with URL and Filename Safe Alphabet as specified in "RFC 4648 §5 'Table 2: The "URL and Filename safe" Base 64 Alphabet'".</remarks>
         /// <returns>Byte array representation of the Base64 URL encoded string in <paramref name="value"/>.</returns>
         /// <exception cref="ArgumentException">If <paramref name="value"/> does not contain a Base64 URL string and <paramref name="shouldReturnNullIfConversionFailed"/> is set to <b>false</b>.</exception>
-        public static byte[] FromBase64UrlStringToByteArray(this string value, bool shouldReturnNullIfConversionFailed = true)
+        public static byte[]? FromBase64UrlStringToByteArray(this string? value, bool shouldReturnNullIfConversionFailed = true)
         {
-            if (value == null)
-                return new byte[0];
+            if (value is null)
+                return Array.Empty<byte>();
 
             if (value.Contains("+") || value.Contains("/"))
             {

@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard1.6;net47;net462;net461;net46;net452;net451;net45</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <Authors>Said Outgajjouft</Authors>
     <Description>Contain extensions that, takes a type and return a string or takes a string and return a type.</Description>
     <Copyright>\u00A9 2017 Said Outgajjouft</Copyright>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/saidout/saidout-stringextensions/raw/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/saidout/saidout-stringextensions</PackageProjectUrl>
     <PackageIconUrl>https://github.com/saidout/saidout-stringextensions/raw/master/saidout_icon32x32.png</PackageIconUrl>
@@ -14,8 +15,14 @@
     <PackageTags>string extensions; base64; base64url;</PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard1.6'">
-    <DefineConstants>CORE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="\" />
+    <None Include="../../saidout_icon32x32.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
