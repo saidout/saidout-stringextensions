@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/saidout/saidout-stringextensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>string extensions; base64; base64url;</PackageTags>
+    <VersionPrefix>2.0.1</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
